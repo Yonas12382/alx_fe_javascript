@@ -101,7 +101,7 @@ async function syncQuotes() {
     quotes.push(...newQuotes);
     saveQuotes();
     populateCategories();
-    showSyncMessage(`${newQuotes.length} new quotes synced from server (server precedence applied).`);
+    showSyncMessage("Quotes synced with server!");
   }
 }
 
