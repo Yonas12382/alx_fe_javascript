@@ -5,37 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dynamic Quote Generator</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 40px;
-    }
-    #quoteDisplay {
-      font-size: 1.3rem;
-      margin: 20px 0;
-      padding: 15px;
-      border: 2px solid #333;
-      border-radius: 8px;
-      background: #f9f9f9;
-      min-height: 50px;
-    }
-    input {
-      margin: 5px;
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #aaa;
-    }
-    button {
-      padding: 8px 12px;
-      border: none;
-      border-radius: 5px;
-      background-color: #007BFF;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
+    body { font-family: Arial, sans-serif; text-align: center; margin: 40px; }
+    #quoteDisplay { font-size: 1.3rem; margin: 20px 0; padding: 15px; border: 2px solid #333; border-radius: 8px; background: #f9f9f9; min-height: 50px; }
+    input { margin: 5px; padding: 8px; border-radius: 5px; border: 1px solid #aaa; }
+    button { padding: 8px 12px; border: none; border-radius: 5px; background-color: #007BFF; color: white; cursor: pointer; }
+    button:hover { background-color: #0056b3; }
   </style>
 </head>
 <body>
@@ -45,16 +19,16 @@
   <button id="newQuote">Show New Quote</button>
 
   <h2>Add Your Own Quote</h2>
-  <div>
-    <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-    <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-    <button id="addQuoteBtn">Add Quote</button>
-  </div>
+  <div id="formContainer"></div>
 
   <h2>Categories</h2>
   <select id="categorySelect">
     <option value="all">All</option>
   </select>
+
+  <h2>Import / Export</h2>
+  <button id="exportBtn">Export Quotes</button>
+  <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
 
   <script src="script.js"></script>
 </body>
