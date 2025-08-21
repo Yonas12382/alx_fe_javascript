@@ -6,7 +6,6 @@ let quotes = [
 
 const quoteDisplay = document.getElementById("quoteDisplay");
 const newQuoteBtn = document.getElementById("newQuote");
-const addQuoteBtn = document.getElementById("addQuoteBtn");
 const categorySelect = document.getElementById("categorySelect");
 
 function showRandomQuote() {
@@ -56,8 +55,29 @@ function addQuote() {
   alert("Quote added successfully!");
 }
 
+function createAddQuoteForm() {
+  const container = document.getElementById("formContainer");
+
+  let inputQuote = document.createElement("input");
+  inputQuote.type = "text";
+  inputQuote.id = "newQuoteText";
+  inputQuote.placeholder = "Enter a new quote";
+
+  let inputCategory = document.createElement("input");
+  inputCategory.type = "text";
+  inputCategory.id = "newQuoteCategory";
+  inputCategory.placeholder = "Enter quote category";
+
+  let addButton = document.createElement("button");
+  addButton.textContent = "Add Quote";
+  addButton.addEventListener("click", addQuote);
+
+  container.appendChild(inputQuote);
+  container.appendChild(inputCategory);
+  container.appendChild(addButton);
+}
+
 newQuoteBtn.addEventListener("click", showRandomQuote);
-addQuoteBtn.addEventListener("click", addQuote);
 
 (function loadCategories() {
   let categories = [...new Set(quotes.map(q => q.category))];
@@ -68,3 +88,5 @@ addQuoteBtn.addEventListener("click", addQuote);
     categorySelect.appendChild(option);
   });
 })();
+
+createAddQuoteForm();
