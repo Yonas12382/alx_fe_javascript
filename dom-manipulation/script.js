@@ -41,7 +41,7 @@ function addQuote() {
   quotes.push(newQuote);
   saveQuotes();
   populateCategories();
-  syncToServer(newQuote);
+  postQuoteToServer(newQuote);
   document.getElementById("newQuoteText").value = "";
   document.getElementById("newQuoteCategory").value = "";
   alert("Quote added successfully!");
@@ -74,20 +74,14 @@ async function fetchQuotesFromServer() {
   try {
     let res = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5");
     let data = await res.json();
-    let serverQuotes = data.map(item => ({ id: item.id, text: item.title, category: "Server" }));
-    let newQuotes = serverQuotes.filter(sq => !quotes.some(lq => lq.id === sq.id));
-    if (newQuotes.length > 0) {
-      quotes.push(...newQuotes);
-      saveQuotes();
-      populateCategories();
-      showSyncMessage(`${newQuotes.length} new quotes synced from server (server precedence applied).`);
-    }
+    return data.map(item => ({ id: item.id, text: item.title, category: "Server" }));
   } catch {
-    showSyncMessage("Failed to sync with server.");
+    showSyncMessage("Failed to fetch quotes from server.");
+    return [];
   }
 }
 
-async function syncToServer(quote) {
+async function postQuoteToServer(quote) {
   try {
     await fetch("https://jsonplaceholder.typicode.com/posts", {
       method: "POST",
@@ -97,6 +91,17 @@ async function syncToServer(quote) {
     showSyncMessage("Quote synced to server.");
   } catch {
     showSyncMessage("Failed to sync quote to server.");
+  }
+}
+
+async function syncQuotes() {
+  let serverQuotes = await fetchQuotesFromServer();
+  let newQuotes = serverQuotes.filter(sq => !quotes.some(lq => lq.id === sq.id));
+  if (newQuotes.length > 0) {
+    quotes.push(...newQuotes);
+    saveQuotes();
+    populateCategories();
+    showSyncMessage(`${newQuotes.length} new quotes synced from server (server precedence applied).`);
   }
 }
 
@@ -118,4 +123,4 @@ if (lastQuote) {
   showRandomQuote();
 }
 
-setInterval(fetchQuotesFromServer, 30000);
+setInterval(syncQuotes, 30000);
