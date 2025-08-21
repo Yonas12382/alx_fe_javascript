@@ -70,7 +70,7 @@ function filterQuotes() {
   showRandomQuote();
 }
 
-async function fetchFromServer() {
+async function fetchQuotesFromServer() {
   try {
     let res = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5");
     let data = await res.json();
@@ -118,4 +118,4 @@ if (lastQuote) {
   showRandomQuote();
 }
 
-setInterval(fetchFromServer, 30000);
+setInterval(fetchQuotesFromServer, 30000);
